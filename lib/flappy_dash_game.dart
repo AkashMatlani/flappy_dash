@@ -17,6 +17,7 @@ class FlappyDashWorld extends World {
   @override
   void onLoad() {
     super.onLoad();
+    add(Dash());
   }
 }
 
