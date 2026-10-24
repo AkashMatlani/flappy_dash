@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flame/palette.dart';
 
 class Dash extends PositionComponent {
   Dash() : super(
