@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flappy_dash/component/pipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -38,6 +39,7 @@ class FlappyDashWorld extends World with TapCallbacks {
     super.onLoad();
     add(DashParallaxBackground());
     add(_dash = Dash());
+    add(Pipe());
   }
 
   @override
