@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 
 import 'component/dash.dart';
 import 'component/dash_parallax_background.dart';
+import 'component/pipe_pair.dart';
 
 class FlappyDashGame extends FlameGame<FlappyDashWorld> with KeyboardEvents {
   FlappyDashGame()
@@ -39,7 +40,10 @@ class FlappyDashWorld extends World with TapCallbacks {
     super.onLoad();
     add(DashParallaxBackground());
     add(_dash = Dash());
-    add(Pipe());
+    const distance = 400.0;
+    for (int i = 0; i < 20; i++) {
+      add(PipePair(position: Vector2(i * distance, 0)));
+    }
   }
 
   @override
