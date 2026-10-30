@@ -2,7 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flappy_dash/component/pipe.dart';
 
 class PipePair extends PositionComponent {
-  PipePair({required super.position, this.gap = 200.0, this.speed = 100});
+  PipePair({required super.position, this.gap = 200.0, this.speed = 200});
 
   final double gap;
   final double speed;
