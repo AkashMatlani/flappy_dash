@@ -12,14 +12,16 @@ import 'component/pipe_pair.dart';
 
 class FlappyDashGame extends FlameGame<FlappyDashWorld> with KeyboardEvents {
   FlappyDashGame()
-      : super(
-    world: FlappyDashWorld(),
-    camera: CameraComponent.withFixedResolution(width: 600, height: 1000),
-  );
+    : super(
+        world: FlappyDashWorld(),
+        camera: CameraComponent.withFixedResolution(width: 600, height: 1000),
+      );
 
   @override
-  KeyEventResult onKeyEvent(KeyEvent event,
-      Set<LogicalKeyboardKey> keysPressed,) {
+  KeyEventResult onKeyEvent(
+    KeyEvent event,
+    Set<LogicalKeyboardKey> keysPressed,
+  ) {
     final isKeyDown = event is KeyDownEvent;
     final isSPace = keysPressed.contains(LogicalKeyboardKey.space);
 
@@ -31,9 +33,11 @@ class FlappyDashGame extends FlameGame<FlappyDashWorld> with KeyboardEvents {
   }
 }
 
-class FlappyDashWorld extends World with TapCallbacks {
+class FlappyDashWorld extends World
+    with TapCallbacks, HasGameReference<FlappyDashGame> {
   late Dash _dash;
   late PipePair _lastPipe;
+  static const _pipeDistance = 400.0;
 
   @override
   void onLoad() {
@@ -43,16 +47,22 @@ class FlappyDashWorld extends World with TapCallbacks {
     _generatePipes(fromX: 350);
   }
 
-  void _generatePipes({
-    int count = 20,
-    double fromX = 0.0,
-    double distance = 400.0
-  }) {
+  void _generatePipes({int count = 5, double fromX = 0.0}) {
     for (int i = 0; i < count; i++) {
       const area = 600;
       final y = (Random().nextDouble() * area) - (area / 2);
-      add(_lastPipe=PipePair(position: Vector2(fromX+  (i* distance), y)));
+      add(
+        _lastPipe = PipePair(position: Vector2(fromX + (i * _pipeDistance), y)),
+      );
     }
+  }
+
+  void _removePipes() {
+    final pipes = children.whereType<PipePair>();
+    final shouldBeRemoved = max(pipes.length - 10,0);
+    pipes.take(shouldBeRemoved).forEach((pipe) {
+      pipe.removeFromParent();
+    });
   }
 
   @override
@@ -69,8 +79,10 @@ class FlappyDashWorld extends World with TapCallbacks {
   @override
   void update(double dt) {
     super.update(dt);
-    if(_dash.x>=_lastPipe.x){
-      _generatePipes();
+    if (_dash.x >= _lastPipe.x) {
+      _generatePipes(fromX: _pipeDistance);
+      _removePipes();
     }
+    game.camera.viewfinder.zoom = 1.0;
   }
 }
