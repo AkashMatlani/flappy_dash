@@ -6,7 +6,10 @@ class Pipe extends PositionComponent {
 
   final bool isFlipped;
 
-  Pipe({required this.isFlipped, required super.position});
+  Pipe({
+    required this.isFlipped,
+    required super.position
+  }):super(priority: 2);
 
   @override
   Future<void> onLoad() async {

@@ -8,6 +8,7 @@ class Dash extends PositionComponent {
         position: Vector2(0, 0),
         size: Vector2(40, 40),
         anchor: Anchor.center,
+        priority: 10,
       );
 
   late Sprite _dashSprite;
