@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 class Dash extends PositionComponent {
@@ -21,6 +22,14 @@ class Dash extends PositionComponent {
     await super.onLoad();
     debugMode = true;
     _dashSprite = await Sprite.load('dash.png');
+    final radius =size.x/2;
+    final center=size/2;
+    add(CircleHitbox(
+      radius: radius*0.75,
+      position: center*1.1,
+      anchor: Anchor.center
+    ));
+
   }
 
   @override

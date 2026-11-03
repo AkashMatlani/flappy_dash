@@ -10,7 +10,7 @@ import 'component/dash.dart';
 import 'component/dash_parallax_background.dart';
 import 'component/pipe_pair.dart';
 
-class FlappyDashGame extends FlameGame<FlappyDashWorld> with KeyboardEvents {
+class FlappyDashGame extends FlameGame<FlappyDashWorld> with KeyboardEvents ,HasCollisionDetection{
   FlappyDashGame()
     : super(
         world: FlappyDashWorld(),
