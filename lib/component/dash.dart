@@ -2,8 +2,9 @@ import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flappy_dash/component/hidden_coin.dart';
 
-class Dash extends PositionComponent {
+class Dash extends PositionComponent with CollisionCallbacks {
   Dash()
     : super(
         position: Vector2(0, 0),
@@ -20,16 +21,16 @@ class Dash extends PositionComponent {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    debugMode = true;
     _dashSprite = await Sprite.load('dash.png');
-    final radius =size.x/2;
-    final center=size/2;
-    add(CircleHitbox(
-      radius: radius*0.75,
-      position: center*1.1,
-      anchor: Anchor.center
-    ));
-
+    final radius = size.x / 2;
+    final center = size / 2;
+    add(
+      CircleHitbox(
+        radius: radius * 0.75,
+        position: center * 1.1,
+        anchor: Anchor.center,
+      ),
+    );
   }
 
   @override
@@ -47,5 +48,13 @@ class Dash extends PositionComponent {
 
   void jump() {
     _velocity = _jumpForce;
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
+    if (other is HiddenCoin) {
+      other.removeFromParent();
+    }
   }
 }

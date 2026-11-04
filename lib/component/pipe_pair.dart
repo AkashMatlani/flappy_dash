@@ -16,7 +16,7 @@ class PipePair extends PositionComponent {
       Pipe(isFlipped: false, position: Vector2(0, gap / 2)),
       //top pipe
       Pipe(isFlipped: true, position: Vector2(0, -(gap / 2))),
-      HiddenCoin(position: Vector2(0, 0)),
+      HiddenCoin(position: Vector2(30, 0)),
     ]);
   }
 
