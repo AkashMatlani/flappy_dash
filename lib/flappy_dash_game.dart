@@ -10,7 +10,8 @@ import 'component/dash.dart';
 import 'component/dash_parallax_background.dart';
 import 'component/pipe_pair.dart';
 
-class FlappyDashGame extends FlameGame<FlappyDashWorld> with KeyboardEvents ,HasCollisionDetection{
+class FlappyDashGame extends FlameGame<FlappyDashWorld>
+    with KeyboardEvents, HasCollisionDetection {
   FlappyDashGame()
     : super(
         world: FlappyDashWorld(),
@@ -39,12 +40,19 @@ class FlappyDashWorld extends World
   late PipePair _lastPipe;
   static const _pipeDistance = 400.0;
 
+  int _score = 0;
+  late TextComponent _scoreText;
+
   @override
   void onLoad() {
     super.onLoad();
     add(DashParallaxBackground());
     add(_dash = Dash());
     _generatePipes(fromX: 350);
+    _scoreText = TextComponent(
+      text: _score.toString(),
+      position: Vector2(0, -(game.size.y / 2)),
+    );
   }
 
   void _generatePipes({int count = 5, double fromX = 0.0}) {
@@ -59,7 +67,7 @@ class FlappyDashWorld extends World
 
   void _removePipes() {
     final pipes = children.whereType<PipePair>();
-    final shouldBeRemoved = max(pipes.length - 10,0);
+    final shouldBeRemoved = max(pipes.length - 10, 0);
     pipes.take(shouldBeRemoved).forEach((pipe) {
       pipe.removeFromParent();
     });
@@ -76,9 +84,14 @@ class FlappyDashWorld extends World
     _dash.jump();
   }
 
+  void increaseScore() {
+    _score += 1;
+  }
+
   @override
   void update(double dt) {
     super.update(dt);
+    _scoreText.text = _score.toString();
     if (_dash.x >= _lastPipe.x) {
       _generatePipes(fromX: _pipeDistance);
       _removePipes();
