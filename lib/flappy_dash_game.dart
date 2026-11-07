@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flappy_dash/bloc/game/game_cubit.dart';
+import 'package:flappy_dash/bloc/game/game_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,11 +15,13 @@ import 'component/pipe_pair.dart';
 
 class FlappyDashGame extends FlameGame<FlappyDashWorld>
     with KeyboardEvents, HasCollisionDetection {
-  FlappyDashGame()
+  FlappyDashGame(this.gameCubit)
     : super(
         world: FlappyDashWorld(),
         camera: CameraComponent.withFixedResolution(width: 600, height: 1000),
       );
+
+  final GameCubit gameCubit;
 
   @override
   KeyEventResult onKeyEvent(
@@ -35,23 +40,53 @@ class FlappyDashGame extends FlameGame<FlappyDashWorld>
 }
 
 class FlappyDashWorld extends World
-    with TapCallbacks, HasGameReference<FlappyDashGame> {
-  late Dash _dash;
-  late PipePair _lastPipe;
-  static const _pipeDistance = 400.0;
+    with TapCallbacks,HasGameReference<FlappyDashGame> {
 
-  int _score = 0;
-  late TextComponent _scoreText;
+  late FlappyDashRootComponent _rootComponent;
 
   @override
   void onLoad() {
     super.onLoad();
+    add(FlameBlocProvider<GameCubit,GameState>(
+        create: ()=>game.gameCubit,children: [
+      _rootComponent= FlappyDashRootComponent(),
+    ]));
+  }
+
+  void onSpaceDown() => _rootComponent.onSpaceDown();
+
+
+  @override
+  void onTapDown(TapDownEvent event) {
+    super.onTapDown(event);
+   _rootComponent.onTapDown(event);
+  }
+}
+
+class FlappyDashRootComponent extends Component with TapCallbacks , HasGameReference<FlappyDashGame>,FlameBlocReader<GameCubit,GameState>{
+  late Dash _dash;
+  late PipePair _lastPipe;
+  static const _pipeDistance = 400.0;
+  late TextComponent _scoreText;
+
+  @override
+  Future<void> onLoad()  async{
+    super.onLoad();
     add(DashParallaxBackground());
     add(_dash = Dash());
     _generatePipes(fromX: 350);
+    add(
     _scoreText = TextComponent(
-      text: _score.toString(),
+      text: '0',
       position: Vector2(0, -(game.size.y / 2)),
+        anchor: Anchor.topCenter,
+        textRenderer: TextPaint(
+          style: const TextStyle(
+            fontSize: 50,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),),
     );
   }
 
@@ -73,25 +108,19 @@ class FlappyDashWorld extends World
     });
   }
 
-  @override
-  void onTapDown(TapDownEvent event) {
-    // TODO: implement onTapDown
-    super.onTapDown(event);
-    _dash.jump();
-  }
 
   void onSpaceDown() {
     _dash.jump();
   }
 
-  void increaseScore() {
-    _score += 1;
+  void onTapDown(TapDownEvent event) {
+    _dash.jump();
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    _scoreText.text = _score.toString();
+    _scoreText.text = bloc.state.currentScore.toString();
     if (_dash.x >= _lastPipe.x) {
       _generatePipes(fromX: _pipeDistance);
       _removePipes();

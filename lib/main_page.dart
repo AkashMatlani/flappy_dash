@@ -1,5 +1,7 @@
 import 'package:flame/game.dart';
+import 'package:flappy_dash/bloc/game/game_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'flappy_dash_game.dart';
 
@@ -12,15 +14,17 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   late FlappyDashGame _flappyDashGame;
+  late GameCubit gameCubit;
 
   @override
   void initState() {
-    _flappyDashGame = FlappyDashGame();
+    gameCubit = BlocProvider.of<GameCubit>(context);
+    _flappyDashGame = FlappyDashGame(gameCubit);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: GameWidget(game: FlappyDashGame()));
+    return Scaffold(body: GameWidget(game: FlappyDashGame(context.read<GameCubit>())));
   }
 }
