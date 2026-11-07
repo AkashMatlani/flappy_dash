@@ -2,10 +2,16 @@ import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flappy_dash/bloc/game/game_cubit.dart';
+import 'package:flappy_dash/bloc/game/game_state.dart';
 import 'package:flappy_dash/component/hidden_coin.dart';
+import 'package:flappy_dash/component/pipe.dart';
 import 'package:flappy_dash/flappy_dash_game.dart';
 
-class Dash extends PositionComponent with CollisionCallbacks ,HasGameReference<FlappyDashGame>{
+class Dash extends PositionComponent with CollisionCallbacks,
+    HasGameReference<FlappyDashGame>,
+    FlameBlocReader<GameCubit,GameState>{
   Dash()
     : super(
         position: Vector2(0, 0),
@@ -55,8 +61,11 @@ class Dash extends PositionComponent with CollisionCallbacks ,HasGameReference<F
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     if (other is HiddenCoin) {
-      game.world.increaseScore();
+     bloc.increaseScore();
       other.removeFromParent();
+    }
+    else if(other is Pipe){
+      bloc.gameOver();
     }
   }
 }
