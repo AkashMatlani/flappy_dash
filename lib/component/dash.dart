@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flappy_dash/component/hidden_coin.dart';
+import 'package:flappy_dash/flappy_dash_game.dart';
 
-class Dash extends PositionComponent with CollisionCallbacks {
+class Dash extends PositionComponent with CollisionCallbacks ,HasGameReference<FlappyDashGame>{
   Dash()
     : super(
         position: Vector2(0, 0),
@@ -54,6 +55,7 @@ class Dash extends PositionComponent with CollisionCallbacks {
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     if (other is HiddenCoin) {
+      game.world.increaseScore();
       other.removeFromParent();
     }
   }
