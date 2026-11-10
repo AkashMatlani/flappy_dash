@@ -40,7 +40,7 @@ class FlappyDashGame extends FlameGame<FlappyDashWorld>
 }
 
 class FlappyDashWorld extends World
-    with TapCallbacks,HasGameReference<FlappyDashGame> {
+    with HasGameReference<FlappyDashGame> {
 
   late FlappyDashRootComponent _rootComponent;
 
@@ -58,8 +58,7 @@ class FlappyDashWorld extends World
 
   @override
   void onTapDown(TapDownEvent event) {
-    super.onTapDown(event);
-   _rootComponent.onTapDown(event);
+    _rootComponent.onTapDown(event);
   }
 }
 
@@ -71,7 +70,7 @@ class FlappyDashRootComponent extends Component with TapCallbacks , HasGameRefer
 
   @override
   Future<void> onLoad()  async{
-    super.onLoad();
+    await super.onLoad();
     add(DashParallaxBackground());
     add(_dash = Dash());
     _generatePipes(fromX: 350);
@@ -110,11 +109,19 @@ class FlappyDashRootComponent extends Component with TapCallbacks , HasGameRefer
 
 
   void onSpaceDown() {
+    _checkToStart();
     _dash.jump();
   }
 
   void onTapDown(TapDownEvent event) {
+    _checkToStart();
     _dash.jump();
+  }
+
+  void _checkToStart() {
+    if (bloc.state.currentPlayingState == PlayingState.none) {
+      bloc.startPLaying();
+    }
   }
 
   @override
@@ -127,4 +134,7 @@ class FlappyDashRootComponent extends Component with TapCallbacks , HasGameRefer
     }
     game.camera.viewfinder.zoom = 1.0;
   }
+
+
+
 }
