@@ -43,6 +43,10 @@ class Dash extends PositionComponent with CollisionCallbacks,
   @override
   void update(double dt) {
     super.update(dt);
+    if(bloc.state.currentPlayingState !=PlayingState.playing)
+    {
+      return;
+    }
     _velocity += _gravity * dt;
     position += _velocity * dt;
   }
@@ -54,6 +58,10 @@ class Dash extends PositionComponent with CollisionCallbacks,
   }
 
   void jump() {
+    if(bloc.state.currentPlayingState !=PlayingState.playing)
+      {
+        return;
+      }
     _velocity = _jumpForce;
   }
 
