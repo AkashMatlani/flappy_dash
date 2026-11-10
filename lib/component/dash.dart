@@ -57,6 +57,11 @@ class Dash extends PositionComponent with CollisionCallbacks,
     _dashSprite.render(canvas, size: size);
   }
 
+  void reset() {
+    position.setZero();
+    _velocity = Vector2.zero();
+  }
+
   void jump() {
     if(bloc.state.currentPlayingState !=PlayingState.playing)
       {
