@@ -58,6 +58,11 @@ class Dash extends PositionComponent
     _dashSprite.render(canvas, size: size);
   }
 
+  void reset() {
+    position.setZero();
+    _velocity = Vector2.zero();
+  }
+
   void jump() {
     if (bloc.state.currentPlayingState != PlayingState.playing) {
       return;
