@@ -14,11 +14,22 @@ class GameCubit extends Cubit<GameState> {
     );
   }
 
+  void reset() {
+    emit(const GameState());
+  }
+
   void increaseScore() {
     emit(state.copyWith(currentScore: state.currentScore + 1));
   }
 
   void gameOver(){
     emit(state.copyWith(currentPlayingState: PlayingState.gameOver));
+  }
+
+  void restartGame(){
+    emit(state.copyWith(
+      currentPlayingState: PlayingState.none,
+      currentScore: 0,
+    ));
   }
 }

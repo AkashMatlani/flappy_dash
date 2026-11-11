@@ -40,7 +40,7 @@ class FlappyDashGame extends FlameGame<FlappyDashWorld>
 }
 
 class FlappyDashWorld extends World
-    with HasGameReference<FlappyDashGame> {
+    with TapCallbacks, HasGameReference<FlappyDashGame> {
 
   late FlappyDashRootComponent _rootComponent;
 
@@ -62,7 +62,7 @@ class FlappyDashWorld extends World
   }
 }
 
-class FlappyDashRootComponent extends Component with TapCallbacks , HasGameReference<FlappyDashGame>,FlameBlocReader<GameCubit,GameState>{
+class FlappyDashRootComponent extends Component with HasGameReference<FlappyDashGame>,FlameBlocReader<GameCubit,GameState>{
   late Dash _dash;
   late PipePair _lastPipe;
   static const _pipeDistance = 400.0;
@@ -119,6 +119,12 @@ class FlappyDashRootComponent extends Component with TapCallbacks , HasGameRefer
   }
 
   void _checkToStart() {
+    if (bloc.state.currentPlayingState == PlayingState.gameOver) {
+      _dash.reset();
+      removeAll(children.whereType<PipePair>().toList());
+      _generatePipes(fromX: 350);
+      bloc.reset();
+    }
     if (bloc.state.currentPlayingState == PlayingState.none) {
       bloc.startPLaying();
     }
