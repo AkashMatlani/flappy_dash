@@ -6,7 +6,8 @@ import 'package:flappy_dash/bloc/game/game_state.dart';
 
 import '../flappy_dash_game.dart';
 
-class DashParallaxBackground extends ParallaxComponent<FlappyDashGame>  with FlameBlocReader<GameCubit,GameState>{
+class DashParallaxBackground extends ParallaxComponent<FlappyDashGame>
+    with FlameBlocReader<GameCubit, GameState> {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
@@ -28,14 +29,14 @@ class DashParallaxBackground extends ParallaxComponent<FlappyDashGame>  with Fla
 
   @override
   void update(double dt) {
-    switch(bloc.state.currentPlayingState){
+    switch (bloc.state.currentPlayingState) {
       case PlayingState.none:
       case PlayingState.playing:
         super.update(dt);
         break;
       case PlayingState.paused:
       case PlayingState.gameOver:
-      break;
+        break;
     }
   }
 }

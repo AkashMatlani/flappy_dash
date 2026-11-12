@@ -1,7 +1,7 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'game_state.dart';
+
 class GameCubit extends Cubit<GameState> {
   GameCubit() : super(GameState());
 
@@ -22,14 +22,13 @@ class GameCubit extends Cubit<GameState> {
     emit(state.copyWith(currentScore: state.currentScore + 1));
   }
 
-  void gameOver(){
+  void gameOver() {
     emit(state.copyWith(currentPlayingState: PlayingState.gameOver));
   }
 
-  void restartGame(){
-    emit(state.copyWith(
-      currentPlayingState: PlayingState.none,
-      currentScore: 0,
-    ));
+  void restartGame() {
+    emit(
+      state.copyWith(currentPlayingState: PlayingState.none, currentScore: 0),
+    );
   }
 }

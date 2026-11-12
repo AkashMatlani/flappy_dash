@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (BuildContext context)=>GameCubit(),
-        child: MaterialApp(title: 'Flappy Dash', home: const MainPage()));
+      create: (BuildContext context) => GameCubit(),
+      child: MaterialApp(title: 'Flappy Dash', home: const MainPage()),
+    );
   }
 }

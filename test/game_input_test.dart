@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flappy_dash/bloc/game/game_cubit.dart';
 import 'package:flappy_dash/bloc/game/game_state.dart';
 import 'package:flappy_dash/component/dash.dart';
+import 'package:flappy_dash/component/flappy_dash_root_component.dart';
 import 'package:flappy_dash/component/pipe_pair.dart';
 import 'package:flappy_dash/flappy_dash_game.dart';
 import 'package:flutter/services.dart';
