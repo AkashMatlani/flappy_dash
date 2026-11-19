@@ -17,7 +17,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   late FlappyDashGame _flappyDashGame;
   late GameCubit gameCubit;
-  PlayingState? _latestState;
 
   @override
   void initState() {
@@ -28,16 +27,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GameCubit, GameState>(
-      listener: (context, state) {
-        if (state.currentPlayingState == PlayingState.none &&
-            _latestState == PlayingState.gameOver) {
-          setState(() {
-            _flappyDashGame = FlappyDashGame(gameCubit);
-          });
-        }
-        _latestState = state.currentPlayingState;
-      },
+    return BlocBuilder<GameCubit, GameState>(
       builder: (context, state) {
         return Scaffold(
           body: Stack(
