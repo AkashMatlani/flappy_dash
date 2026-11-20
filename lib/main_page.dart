@@ -1,3 +1,4 @@
+
 import 'package:flame/game.dart';
 import 'package:flappy_dash/bloc/game/game_cubit.dart';
 import 'package:flappy_dash/bloc/game/game_state.dart';
@@ -21,42 +22,50 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
+    super.initState();
     gameCubit = BlocProvider.of<GameCubit>(context);
     _flappyDashGame = FlappyDashGame(gameCubit);
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    const isTest = bool.fromEnvironment('FLUTTER_TEST');
+
+    final prompt = const Text(
+      'TAP TO PLAY',
+      style: TextStyle(
+        color: Color(0XFF2387FC),
+        fontWeight: FontWeight.bold,
+        fontSize: 38,
+        letterSpacing: 4,
+      ),
+    );
+
+    final promptWidget = isTest
+        ? prompt
+        : prompt
+        .animate(
+      onPlay: (controller) => controller.repeat(reverse: true),
+    )
+        .scale(
+      begin: const Offset(1.0, 1.0),
+      end: const Offset(1.2, 1.2),
+      duration: const Duration(milliseconds: 500),
+    );
+
     return BlocBuilder<GameCubit, GameState>(
       builder: (context, state) {
         return Scaffold(
           body: Stack(
             children: [
               GameWidget(game: _flappyDashGame),
+
               if (state.currentPlayingState == PlayingState.none)
                 Align(
-                  alignment: Alignment(0, 0.2),
-                  child:
-                      const Text(
-                            'TAP TO PLAY',
-                            style: TextStyle(
-                              color: Color(0XFF2387FC),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 38,
-                              letterSpacing: 4,
-                            ),
-                          )
-                          .animate(
-                            onPlay: (controller) =>
-                                controller.repeat(reverse: true),
-                          )
-                          .scale(
-                            begin: const Offset(1.0, 1.0),
-                            end: const Offset(1.2, 1.2),
-                            duration: const Duration(milliseconds: 500),
-                          ),
+                  alignment: const Alignment(0, 0.2),
+                  child: promptWidget,
                 ),
+
               if (state.currentPlayingState == PlayingState.gameOver)
                 GameOverWidget(),
             ],
