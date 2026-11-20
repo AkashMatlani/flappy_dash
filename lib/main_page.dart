@@ -48,8 +48,7 @@ class _MainPageState extends State<MainPage> {
     final promptWidget = widget.animatePrompt
         ? prompt
         .animate(
-      onPlay: (controller) =>
-          controller.repeat(reverse: true),
+      onPlay: (controller) => controller.repeat(reverse: true),
     )
         .scale(
       begin: const Offset(1.0, 1.0),
