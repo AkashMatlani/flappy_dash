@@ -3,6 +3,7 @@ import 'package:flappy_dash/bloc/game/game_cubit.dart';
 import 'package:flappy_dash/bloc/game/game_state.dart';
 import 'package:flappy_dash/widget/game_over_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'flappy_dash_game.dart';
@@ -36,14 +37,25 @@ class _MainPageState extends State<MainPage> {
               if (state.currentPlayingState == PlayingState.none)
                 Align(
                   alignment: Alignment(0, 0.2),
-                  child: const Text(
-                    'PRESS TO START',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 28,
-                    ),
-                  ),
+                  child:
+                      const Text(
+                            'TAP TO PLAY',
+                            style: TextStyle(
+                              color: Color(0XFF2387FC),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 38,
+                              letterSpacing: 4,
+                            ),
+                          )
+                          .animate(
+                            onPlay: (controller) =>
+                                controller.repeat(reverse: true),
+                          )
+                          .scale(
+                            begin: const Offset(1.0, 1.0),
+                            end: const Offset(1.2, 1.2),
+                            duration: const Duration(microseconds: 500),
+                          ),
                 ),
               if (state.currentPlayingState == PlayingState.gameOver)
                 GameOverWidget(),

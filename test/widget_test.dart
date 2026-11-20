@@ -8,6 +8,6 @@ void main() {
     await tester.pumpWidget(const MyApp());
     await tester.pump();
 
-    expect(find.text('PRESS TO START'), findsOneWidget);
+    expect(find.text('TAP TO PLAY'), findsOneWidget);
   });
 }

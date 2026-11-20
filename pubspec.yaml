@@ -15,6 +15,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   equatable: ^3.0.0
   cupertino_icons: ^1.0.8
+  flutter_animate: ^4.5.2
 
 dev_dependencies:
   flutter_test:
@@ -31,3 +32,9 @@ flutter:
     - assets/images/
     - assets/images/background/
     - assets/screenshots/
+
+fonts:
+  - family: Chewy
+    fonts:
+      - asset: assets/fonts/Chewy-Regular.rtf
+

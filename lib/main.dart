@@ -15,6 +15,9 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => GameCubit(),
       child: MaterialApp(title: 'Flappy Dash',
+          theme: ThemeData(
+            fontFamily: 'Chewy',
+          ),
           debugShowCheckedModeBanner: false,
           home: const MainPage()),
     );
