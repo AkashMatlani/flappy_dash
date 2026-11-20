@@ -9,8 +9,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'flappy_dash_game.dart';
 
+
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  const MainPage({
+    super.key,
+    this.animatePrompt = true,
+  });
+
+  final bool animatePrompt;
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -29,8 +35,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    const isTest = bool.fromEnvironment('FLUTTER_TEST');
-
     final prompt = const Text(
       'TAP TO PLAY',
       style: TextStyle(
@@ -41,17 +45,18 @@ class _MainPageState extends State<MainPage> {
       ),
     );
 
-    final promptWidget = isTest
+    final promptWidget = widget.animatePrompt
         ? prompt
-        : prompt
         .animate(
-      onPlay: (controller) => controller.repeat(reverse: true),
+      onPlay: (controller) =>
+          controller.repeat(reverse: true),
     )
         .scale(
       begin: const Offset(1.0, 1.0),
       end: const Offset(1.2, 1.2),
       duration: const Duration(milliseconds: 500),
-    );
+    )
+        : prompt;
 
     return BlocBuilder<GameCubit, GameState>(
       builder: (context, state) {
@@ -75,3 +80,4 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
+
