@@ -54,7 +54,7 @@ class _MainPageState extends State<MainPage> {
                           .scale(
                             begin: const Offset(1.0, 1.0),
                             end: const Offset(1.2, 1.2),
-                            duration: const Duration(microseconds: 500),
+                            duration: const Duration(milliseconds: 500),
                           ),
                 ),
               if (state.currentPlayingState == PlayingState.gameOver)

@@ -33,8 +33,8 @@ flutter:
     - assets/images/background/
     - assets/screenshots/
 
-fonts:
-  - family: Chewy
-    fonts:
-      - asset: assets/fonts/Chewy-Regular.rtf
+  fonts:
+    - family: Chewy
+      fonts:
+        - asset: assets/fonts/Chewy-Regular.ttf
 
