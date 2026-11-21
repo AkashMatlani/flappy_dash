@@ -8,15 +8,23 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+    this.animatePrompt = true,
+  });
+
+  final bool animatePrompt;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => GameCubit(),
-      child: MaterialApp(title: 'Flappy Dash',
-          debugShowCheckedModeBanner: false,
-          home: const MainPage()),
+      child: MaterialApp(
+        title: 'Flappy Dash',
+        theme: ThemeData(fontFamily: 'Chewy'),
+        debugShowCheckedModeBanner: false,
+        home: MainPage(animatePrompt: animatePrompt),
+      ),
     );
   }
 }
