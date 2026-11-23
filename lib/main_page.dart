@@ -1,4 +1,3 @@
-
 import 'package:flame/game.dart';
 import 'package:flappy_dash/bloc/game/game_cubit.dart';
 import 'package:flappy_dash/bloc/game/game_state.dart';
@@ -9,12 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'flappy_dash_game.dart';
 
-
 class MainPage extends StatefulWidget {
-  const MainPage({
-    super.key,
-    this.animatePrompt = true,
-  });
+  const MainPage({super.key, this.animatePrompt = true});
 
   final bool animatePrompt;
 
@@ -35,26 +30,26 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    final prompt = const Text(
-      'TAP TO PLAY',
-      style: TextStyle(
-        color: Color(0XFF2387FC),
-        fontWeight: FontWeight.bold,
-        fontSize: 38,
-        letterSpacing: 4,
+    final prompt = IgnorePointer(
+      child: Text(
+        'TAP TO PLAY',
+        style: TextStyle(
+          color: Color(0XFF2387FC),
+          fontWeight: FontWeight.bold,
+          fontSize: 38,
+          letterSpacing: 4,
+        ),
       ),
     );
 
     final promptWidget = widget.animatePrompt
         ? prompt
-        .animate(
-      onPlay: (controller) => controller.repeat(reverse: true),
-    )
-        .scale(
-      begin: const Offset(1.0, 1.0),
-      end: const Offset(1.2, 1.2),
-      duration: const Duration(milliseconds: 500),
-    )
+              .animate(onPlay: (controller) => controller.repeat(reverse: true))
+              .scale(
+                begin: const Offset(1.0, 1.0),
+                end: const Offset(1.2, 1.2),
+                duration: const Duration(milliseconds: 500),
+              )
         : prompt;
 
     return BlocBuilder<GameCubit, GameState>(
@@ -65,10 +60,7 @@ class _MainPageState extends State<MainPage> {
               GameWidget(game: _flappyDashGame),
 
               if (state.currentPlayingState == PlayingState.none)
-                Align(
-                  alignment: const Alignment(0, 0.2),
-                  child: promptWidget,
-                ),
+                Align(alignment: const Alignment(0, 0.2), child: promptWidget),
 
               if (state.currentPlayingState == PlayingState.gameOver)
                 GameOverWidget(),
@@ -79,4 +71,3 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-
