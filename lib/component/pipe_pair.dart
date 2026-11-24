@@ -27,7 +27,7 @@ class PipePair extends PositionComponent
   @override
   void update(double dt) {
     switch (bloc.state.currentPlayingState) {
-      case PlayingState.none:
+      case PlayingState.idle:
       case PlayingState.paused:
       case PlayingState.gameOver:
         break;

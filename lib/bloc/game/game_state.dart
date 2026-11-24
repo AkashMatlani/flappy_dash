@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class GameState with Equatable {
   const GameState({
     this.currentScore = 0,
-    this.currentPlayingState = PlayingState.none,
+    this.currentPlayingState = PlayingState.idle,
   });
 
   final int currentScore;
@@ -19,4 +19,16 @@ class GameState with Equatable {
   List<Object> get props => [currentScore, currentPlayingState];
 }
 
-enum PlayingState { none, playing, paused, gameOver }
+enum PlayingState {
+  idle,
+  playing,
+  paused,
+  gameOver;
+
+  bool get isIdle => this == PlayingState.idle;
+  bool get isPlaying => this == PlayingState.playing;
+  bool get isNotPlaying => !isPlaying;
+  bool get isPaused => this == PlayingState.paused;
+  bool get isGameOver => this == PlayingState.gameOver;
+
+}
