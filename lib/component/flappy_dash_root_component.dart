@@ -2,10 +2,8 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/text.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flappy_dash/component/pipe_pair.dart';
-import 'package:flutter/material.dart';
 
 import '../bloc/game/game_cubit.dart';
 import '../bloc/game/game_state.dart';
