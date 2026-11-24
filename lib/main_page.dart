@@ -62,13 +62,15 @@ class _MainPageState extends State<MainPage> {
               if (state.currentPlayingState.isIdle)
                 Align(alignment: const Alignment(0, 0.2), child: promptWidget),
               if (!state.currentPlayingState.isGameOver)
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 24.0),
-                    child: Text(
-                      state.currentScore.toString(),
-                      style: TextStyle(color: Colors.black, fontSize: 38),
+                IgnorePointer(
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 24.0),
+                      child: Text(
+                        state.currentScore.toString(),
+                        style: TextStyle(color: Colors.black, fontSize: 38),
+                      ),
                     ),
                   ),
                 ),
