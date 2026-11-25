@@ -61,7 +61,8 @@ class _MainPageState extends State<MainPage> {
               GameWidget(game: _flappyDashGame),
               if (state.currentPlayingState.isIdle)
                 Align(alignment: const Alignment(0, 0.2), child: promptWidget),
-              if (state.currentPlayingState.isNotGameOver) TopScore(),
+              if (state.currentPlayingState.isNotGameOver)
+                const IgnorePointer(child: TopScore()),
               if (state.currentPlayingState.isGameOver) GameOverWidget(),
             ],
           ),
