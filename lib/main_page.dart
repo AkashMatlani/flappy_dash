@@ -2,6 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flappy_dash/bloc/game/game_cubit.dart';
 import 'package:flappy_dash/bloc/game/game_state.dart';
 import 'package:flappy_dash/widget/game_over_widget.dart';
+import 'package:flappy_dash/widget/top_score.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,25 +59,10 @@ class _MainPageState extends State<MainPage> {
           body: Stack(
             children: [
               GameWidget(game: _flappyDashGame),
-
               if (state.currentPlayingState.isIdle)
                 Align(alignment: const Alignment(0, 0.2), child: promptWidget),
-              if (!state.currentPlayingState.isGameOver)
-                IgnorePointer(
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 24.0),
-                      child: Text(
-                        state.currentScore.toString(),
-                        style: TextStyle(color: Colors.black, fontSize: 38),
-                      ),
-                    ),
-                  ),
-                ),
-
-              if (state.currentPlayingState.isGameOver)
-                GameOverWidget(),
+              if (state.currentPlayingState.isNotGameOver) TopScore(),
+              if (state.currentPlayingState.isGameOver) GameOverWidget(),
             ],
           ),
         );

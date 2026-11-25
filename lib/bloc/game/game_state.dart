@@ -30,5 +30,6 @@ enum PlayingState {
   bool get isNotPlaying => !isPlaying;
   bool get isPaused => this == PlayingState.paused;
   bool get isGameOver => this == PlayingState.gameOver;
+  bool get isNotGameOver => !isGameOver;
 
 }
