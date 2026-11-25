@@ -37,7 +37,7 @@ class FlappyDashRootComponent extends Component
     }
   }
 
-  void _removePipes() {
+  void _removeLastPipes() {
     final pipes = children.whereType<PipePair>();
     final shouldBeRemoved = max(pipes.length - 10, 0);
     pipes.take(shouldBeRemoved).forEach((pipe) {
@@ -62,7 +62,7 @@ class FlappyDashRootComponent extends Component
       _generatePipes(fromX: 350);
       bloc.reset();
     }
-    if (bloc.state.currentPlayingState == PlayingState.idle) {
+    if (bloc.state.currentPlayingState.isIdle) {
       bloc.startPLaying();
     }
   }
@@ -72,7 +72,7 @@ class FlappyDashRootComponent extends Component
     super.update(dt);
     if (_dash.x >= _lastPipe.x) {
       _generatePipes(fromX: _pipeDistance);
-      _removePipes();
+      _removeLastPipes();
     }
     game.camera.viewfinder.zoom = 1.0;
   }
