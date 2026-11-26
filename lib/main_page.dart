@@ -19,13 +19,12 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  late FlappyDashGame _flappyDashGame;
-  late GameCubit gameCubit;
+  late final FlappyDashGame _flappyDashGame;
 
   @override
   void initState() {
     super.initState();
-    gameCubit = BlocProvider.of<GameCubit>(context);
+    final gameCubit = context.read<GameCubit>();
     _flappyDashGame = FlappyDashGame(gameCubit);
   }
 
@@ -40,10 +39,10 @@ class _MainPageState extends State<MainPage> {
               if (state.currentPlayingState.isIdle)
                 Align(
                   alignment: const Alignment(0, 0.2),
-                  child: TapToPlay(animatePrompt: true),
+                  child: TapToPlay(animatePrompt: widget.animatePrompt),
                 ),
-              if (state.currentPlayingState.isNotGameOver) TopScore(),
-              if (state.currentPlayingState.isGameOver) GameOverWidget(),
+              if (state.currentPlayingState.isNotGameOver) const TopScore(),
+              if (state.currentPlayingState.isGameOver) const GameOverWidget(),
             ],
           ),
         );
