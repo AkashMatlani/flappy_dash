@@ -2,9 +2,9 @@ import 'package:flame/game.dart';
 import 'package:flappy_dash/bloc/game/game_cubit.dart';
 import 'package:flappy_dash/bloc/game/game_state.dart';
 import 'package:flappy_dash/widget/game_over_widget.dart';
+import 'package:flappy_dash/widget/tap_to_Play.dart';
 import 'package:flappy_dash/widget/top_score.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'flappy_dash_game.dart';
@@ -31,28 +31,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    final prompt = IgnorePointer(
-      child: Text(
-        'TAP TO PLAY',
-        style: TextStyle(
-          color: Color(0XFF2387FC),
-          fontWeight: FontWeight.bold,
-          fontSize: 38,
-          letterSpacing: 4,
-        ),
-      ),
-    );
-
-    final promptWidget = widget.animatePrompt
-        ? prompt
-              .animate(onPlay: (controller) => controller.repeat(reverse: true))
-              .scale(
-                begin: const Offset(1.0, 1.0),
-                end: const Offset(1.2, 1.2),
-                duration: const Duration(milliseconds: 500),
-              )
-        : prompt;
-
     return BlocBuilder<GameCubit, GameState>(
       builder: (context, state) {
         return Scaffold(
@@ -60,7 +38,10 @@ class _MainPageState extends State<MainPage> {
             children: [
               GameWidget(game: _flappyDashGame),
               if (state.currentPlayingState.isIdle)
-                Align(alignment: const Alignment(0, 0.2), child: promptWidget),
+                Align(
+                  alignment: const Alignment(0, 0.2),
+                  child: TapToPlay(animatePrompt: true),
+                ),
               if (state.currentPlayingState.isNotGameOver) TopScore(),
               if (state.currentPlayingState.isGameOver) GameOverWidget(),
             ],
