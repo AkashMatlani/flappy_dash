@@ -16,6 +16,7 @@ dependencies:
   equatable: ^3.0.0
   cupertino_icons: ^1.0.8
   flutter_animate: ^4.5.2
+  flutter_soloud: ^5.4.0
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +33,7 @@ flutter:
     - assets/images/
     - assets/images/background/
     - assets/screenshots/
+    - assets/audio/
 
   fonts:
     - family: Chewy
