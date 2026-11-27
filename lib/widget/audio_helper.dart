@@ -8,12 +8,11 @@ class AudioHelper {
 
   Future<void> initalize() async {
     _soLoud = SoLoud.instance;
-    if (_soLoud.isInitialized) {
-      return;
+    if (!_soLoud.isInitialized) {
+      await _soLoud.init();
     }
-    await _soLoud.init();
-    _backgroundSource = await _soLoud.loadAsset('assets/game/background.mp3');
-    _scoreSource= await _soLoud.loadAsset('assets/game/score.mp3');
+    _backgroundSource = await _soLoud.loadAsset('assets/audio/background.mp3');
+    _scoreSource = await _soLoud.loadAsset('assets/audio/score.mp3');
   }
 
   void playBackgroundAudio()  {
@@ -29,8 +28,7 @@ class AudioHelper {
         _playingBackground!, 0.0, const Duration(microseconds: 500));
   }
 
-  void playScoreCollectSound(){
-    _playingBackground =  _soLoud.play(_scoreSource);
-
+  void playScoreCollectSound() {
+    _soLoud.play(_scoreSource);
   }
 }
